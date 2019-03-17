@@ -10,31 +10,35 @@ const getGeoAsync = function() {
     }, (err) => {
       reject(err)
     }, {
-      enableHighAccuracy: true,
+      enableHighAccuracy: true, // 启用精确定位
+      maximumAge        : 30000, // 缓存
+      timeout           : 27000 // 超时
     })
   })
 }
 
 const getLocation = function() {
   return new Promise(function(resolve, reject) {
-    //初始化高德地图插件,注意 GetLocation可以不对应html中的控件,但必须有值
+    // 初始化高德地图插件,注意 GetLocation可以不对应html中的控件,但必须有值
     var mapObj = new AMap.Map('GetLocation');
-    //加载定位插件
+    // 加载定位插件
     mapObj.plugin('AMap.Geolocation', function () {
         const geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            maximumAge: 0,           //定位结果缓存0毫秒，默认：0
-            convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+            enableHighAccuracy: true,// 是否使用高精度定位，默认:true
+            timeout: 10000,          // 超过10秒后停止定位，默认：无穷大
+            maximumAge: 0,           // 定位结果缓存0毫秒，默认：0
+            convert: true,           // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
         });
         mapObj.addControl(geolocation);
         geolocation.getCurrentPosition(); // 也可采取callback方法 与以下的事件监听方法二选一
         AMap.event.addListener(geolocation, 'complete', (data) => {
+          const {position} = data
+          const { lat, lng } = position // 获取纬度、经度
           resolve(data)
-        });//返回定位信息
+        });// 返回定位信息
         AMap.event.addListener(geolocation, 'error', (error) => {
           reject(error)
-        }); //返回定位出错信息
+        }); // 返回定位出错信息
     });
   })
 }
