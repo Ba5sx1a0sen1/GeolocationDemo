@@ -24,8 +24,35 @@
       <button id="getGeo">原生获取地理位置</button>
       <button id="getGeoT">高德获取地理位置</button>
     </div>
+    <canvas id="canvas" style="background-color:#ccc;margin-top:10px;"></canvas>
   </div>
-
+  <script>
+    const canvas = document.querySelector('#canvas')
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = "rgb(200,0,0)"
+    ctx.fillRect (10, 10, 50, 50)
+    ctx.strokeStyle = 'rgb(0,200,0)'
+    ctx.strokeRect(70, 10, 50, 50)
+    ctx.clearRect(20,20,30,30)
+    ctx.beginPath();
+    ctx.moveTo(130, 10)
+    ctx.lineTo(130, 40)
+    ctx.lineTo(155, 60)
+    ctx.stroke()
+    ctx.closePath()
+    ctx.beginPath()
+    ctx.arc(170, 25, 15, 0, Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.arc(200, 25, 15, 0, Math.PI)
+    ctx.fill()
+    ctx.strokeStyle = 'black'
+    ctx.font = '30px serif'
+    ctx.textAlign = 'center'
+    ctx.fillText('我是填充文本', 150, 100)
+    ctx.strokeText('我是描边文本', 150, 130)
+  </script>
   <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.13&key=f723c81a2d67cdaaecbf902ff5db54c0"></script> 
   <script src="./script.js"></script>
 </body>
